@@ -1,3 +1,24 @@
-venv/
-app/.env
+
 Dockerfile/
+
+# Environments and Secrets
+.env
+app/.env
+venv/
+env/
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Local logs and temporary files
+*.log
+email_log.txt
+ashs.txt
+file_structure.txt

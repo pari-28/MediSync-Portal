@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Dashboard</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7fc;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        .header {
+            background-color: #5c6bc0;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 4px solid #3f51b5;
+        }
+
+        .nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        .nav a:hover {
+            color: #ffeb3b;
+        }
+
+        .dashboard {
+            max-width: 1200px;
+            margin: 40px auto;
+            background-color: #ffffff;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            padding: 30px;
+            transition: box-shadow 0.3s ease-in-out;
+        }
+
+        .dashboard:hover {
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+        }
+
+        .dashboard-welcome h2 {
+            color: #3f51b5;
+            margin-bottom: 10px;
+            font-size: 2rem;
+        }
+
+        .dashboard-welcome p {
+            color: #555;
+            font-size: 1.1rem;
+        }
+
+        .dashboard-links {
+            display: flex;
+            justify-content: space-around;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .dashboard-links a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 12px 25px;
+            border-radius: 8px;
+            background-color: #3f51b5;
+            transition: background-color 0.3s, transform 0.3s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .dashboard-links a:hover {
+            background-color: #283593;
+            transform: translateY(-3px);
+        }
+
+        .content-section {
+            display: none;
+            padding: 20px;
+            background-color: #fafafa;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .content-section h3 {
+            color: #3f51b5;
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+
+        .content-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .content-section li {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+            font-size: 1.1rem;
+            transition: background-color 0.3s;
+        }
+
+        .content-section li:hover {
+            background-color: #f1f1f1;
+        }
+
+        .content-section a {
+            color: #ff5722;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .content-section a:hover {
+            text-decoration: underline;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .dashboard-links {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .dashboard-links a {
+                width: 80%;
+                margin: 10px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1>Welcome, {{ patient_name }}!</h1>
+        <nav class="nav">
+            <a href="{{ url_for('doctor_bp.logout') }}">Logout</a>
+        </nav>
+    </header>
+
+    <section class="dashboard">
+        <div class="dashboard-welcome">
+            <h2>Your Dashboard</h2>
+            <p>Manage your appointments and medical records effortlessly.</p>
+        </div>
+
+        <div class="dashboard-links">
+            <a href="/patient/view_appointments">View Appointments</a>
+            <a href="/patient/create_appointment">Create Appointments</a>
+            <a href="#" onclick="showSection('history')">View Medical History</a>
+            <a href="/payments/create_payment">Create Payments</a> <!-- Added link to Create Payment -->
+            <a href="/patient/register_patient">Update Profile</a>
+        </div>
+
+        <div class="content-section" id="appointments">
+            <h3>Upcoming Appointments</h3>
+            <ul>
+                <li>Appointment with Dr. John Doe on December 5, 2024 at 10:00 AM</li>
+                <li>Appointment with Dr. Jane Smith on December 10, 2024 at 02:00 PM</li>
+            </ul>
+        </div>
+
+        <div class="content-section" id="history">
+            <h3>Your Medical History</h3>
+            <ul>
+                <li>Blood Pressure: Normal (Date: November 10, 2024)</li>
+                <li>Prescription: Paracetamol 500mg (Date: November 12, 2024)</li>
+            </ul>
+        </div>
+    </section>
+
+    <script>
+        function showSection(sectionId) {
+            const sections = document.querySelectorAll('.content-section');
+            sections.forEach(section => {
+                section.style.display = 'none';
+            });
+
+            const sectionToShow = document.getElementById(sectionId);
+            if (sectionToShow) {
+                sectionToShow.style.display = 'block';
+            }
+        }
+    </script>
+</body>
+</html>

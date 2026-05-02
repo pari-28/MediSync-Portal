@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Appointments</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fc;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #3f5b76;
+            color: white;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .btn {
+            background-color: #3f5b76;
+            color: white;
+            padding: 10px 15px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 20px;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            background-color: #1f3a4c;
+        }
+
+        /* Responsive design for mobile devices */
+        @media screen and (max-width: 768px) {
+            table, th, td {
+                display: block;
+                width: 100%;
+            }
+            th, td {
+                text-align: right;
+            }
+            th {
+                background-color: #3f5b76;
+                color: white;
+                padding: 10px;
+            }
+            td {
+                padding: 8px 10px;
+                border: none;
+                position: relative;
+            }
+            td:before {
+                content: attr(data-label);
+                position: absolute;
+                left: 10px;
+                top: 10px;
+                font-weight: bold;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>My Appointments</h1>
+        {% if appointments %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Appointment ID</th>
+                        <th>Patient Name</th>
+                        <th>Appointment Date</th>
+                        <th>Appointment Time</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for appointment in appointments %}
+                        <tr>
+                            <td data-label="Appointment ID">{{ appointment.id }}</td>
+                            <td data-label="Patient Name">{{ appointment.patient_name }}</td>
+                            <td data-label="Appointment Date">{{ appointment.appointment_date.strftime('%Y-%m-%d') }}</td>
+                            <td data-label="Appointment Time">{{ appointment.appointment_time.strftime('%H:%M:%S') }}</td>
+                            <td data-label="Status">{{ appointment.status }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>No appointments available.</p>
+        {% endif %}
+
+        <a href="{{ url_for('auth.doctor_dashboard') }}" class="btn">Back to Dashboard</a>
+        <a href="{{ url_for('doctor_bp.scan_qr_page') }}" class="btn">Scan QR</a>
+    </div>
+</body>
+</html>
